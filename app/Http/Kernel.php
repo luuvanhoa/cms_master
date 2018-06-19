@@ -41,6 +41,11 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+
+        'authadminRoute' => [
+            'web',
+            'authadmin'
+        ]
     ];
 
     /**
@@ -59,5 +64,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+        'authadmin' => \App\Http\Middleware\AuthAdmin::class,
     ];
 }
