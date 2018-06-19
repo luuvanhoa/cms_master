@@ -42,7 +42,7 @@
 											<td align="center">{{$category->position_footer}}</td>
 
 											<td align="center" class="action-td" role="gridcell" aria-describedby="jqgrid_act">
-												<a href="<?php echo route($aliasRouter, $category->id); ?>" data-toggle="tooltip" title="Chỉnh sửa danh mục" class="btn btn-xs btn-default">
+												<a href="<?php echo route('article-category-edit', $category->id); ?>" data-toggle="tooltip" title="Chỉnh sửa danh mục" class="btn btn-xs btn-default">
 													<i class="fa fa-pencil"></i>
 												</a>
 												<div class="btn-action" id="{{$category->id}}">{!! $status !!}</div>
