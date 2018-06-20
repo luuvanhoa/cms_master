@@ -5,13 +5,13 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>CMS - Team Master!</title>
+	<title>CMS - ZendVN!</title>
 
 	{!! Html::style('css/bootstrap.min.css') !!}
-	{!! Html::style('admin/css/font-awesome.min.css') !!}
-	{!! Html::style('admin/css/nprogress.css') !!}
-	{!! Html::style('admin/css/animate.min.css') !!}
-	{!! Html::style('admin/css/custom.min.css') !!}
+	{!! Html::style('st-admin/css/font-awesome.min.css') !!}
+	{!! Html::style('st-admin/css/nprogress.css') !!}
+	{!! Html::style('st-admin/css/animate.min.css') !!}
+	{!! Html::style('st-admin/css/custom.min.css') !!}
 
 </head>
 <body class="login">
@@ -39,8 +39,8 @@
 					<div class="clearfix"></div>
 					<div class="separator">
 						<div>
-							<h1><i class="fa fa-paw"></i> CMS - Team Master!</h1>
-							<p>©2016 All Rights Reserved. CMS - Team Master! is a Bootstrap 3 template. Privacy and Terms</p>
+							<h1><i class="fa fa-paw"></i> CMS - ZendVN!</h1>
+							<p>©2018 All Rights Reserved. CMS - ZendVN! 2018. Privacy and Terms</p>
 						</div>
 					</div>
 				{!! Form::close() !!}

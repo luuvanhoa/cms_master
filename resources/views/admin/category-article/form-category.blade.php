@@ -1,20 +1,20 @@
 @extends('layouts.admin')
 
 @section('header_css')
-	{!! Html::style('admin/vendors/iCheck/skins/flat/green.css') !!}
+	{!! Html::style('st-admin/vendors/iCheck/skins/flat/green.css') !!}
 @endsection
 
 @section('footer_js')
-	{!! Html::script('admin/vendors/iCheck/icheck.min.js') !!}
-	{!! Html::script('admin/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js') !!}
-	{!! Html::script('admin/vendors/jquery.hotkeys/jquery.hotkeys.js') !!}
-	{!! Html::script('admin/vendors/google-code-prettify/src/prettify.js') !!}
-	{!! Html::script('admin/vendors/jquery.tagsinput/src/jquery.tagsinput.js') !!}
-	{!! Html::script('admin/vendors/switchery/dist/switchery.min.js') !!}
-	{!! Html::script('admin/vendors/select2/dist/js/select2.full.min.js') !!}
-	{!! Html::script('admin/vendors/autosize/dist/autosize.min.js') !!}
-	{!! Html::script('admin/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js') !!}
-	{!! Html::script('admin/vendors/starrr/dist/starrr.js') !!}
+	{!! Html::script('st-admin/vendors/iCheck/icheck.min.js') !!}
+	{!! Html::script('st-admin/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js') !!}
+	{!! Html::script('st-admin/vendors/jquery.hotkeys/jquery.hotkeys.js') !!}
+	{!! Html::script('st-admin/vendors/google-code-prettify/src/prettify.js') !!}
+	{!! Html::script('st-admin/vendors/jquery.tagsinput/src/jquery.tagsinput.js') !!}
+	{!! Html::script('st-admin/vendors/switchery/dist/switchery.min.js') !!}
+	{!! Html::script('st-admin/vendors/select2/dist/js/select2.full.min.js') !!}
+	{!! Html::script('st-admin/vendors/autosize/dist/autosize.min.js') !!}
+	{!! Html::script('st-admin/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js') !!}
+	{!! Html::script('st-admin/vendors/starrr/dist/starrr.js') !!}
 @endsection
 
 @section('content')

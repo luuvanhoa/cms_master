@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAttributesProductTable extends Migration
+class CreateCoursesDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateAttributesProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('attributes_product', function (Blueprint $table) {
+        Schema::create('courses_detail', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('status')->nullable(true)->default(1);
-            $table->dateTime('created_time')->nullable(true)->default(null);
-            $table->dateTime('modified_time')->nullable(true)->default(null);
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateAttributesProductTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attributes_product');
+        Schema::dropIfExists('courses_detail');
     }
 }

@@ -1,12 +1,12 @@
-{!! Html::script('admin/vendors/jquery/dist/jquery.min.js') !!}
-{!! Html::script('admin/vendors/bootstrap/dist/js/bootstrap.min.js') !!}
+{!! Html::script('st-admin/vendors/jquery/dist/jquery.min.js') !!}
+{!! Html::script('st-admin/vendors/bootstrap/dist/js/bootstrap.min.js') !!}
 
 @yield('footer_js')
 
-{!! Html::script('admin/vendors/fastclick/lib/fastclick.js') !!}
-{!! Html::script('admin/vendors/nprogress/nprogress.js') !!}
-{!! Html::script('admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') !!}
-{!! Html::script('admin/vendors/moment/min/moment.min.js') !!}
-{!! Html::script('admin/vendors/bootstrap-daterangepicker/daterangepicker.js') !!}
+{!! Html::script('st-admin/vendors/fastclick/lib/fastclick.js') !!}
+{!! Html::script('st-admin/vendors/nprogress/nprogress.js') !!}
+{!! Html::script('st-admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') !!}
+{!! Html::script('st-admin/vendors/moment/min/moment.min.js') !!}
+{!! Html::script('st-admin/vendors/bootstrap-daterangepicker/daterangepicker.js') !!}
 
-{!! Html::script('admin/js/custom.min.js') !!}
+{!! Html::script('st-admin/js/custom.min.js') !!}

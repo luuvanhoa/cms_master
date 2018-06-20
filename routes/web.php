@@ -16,7 +16,7 @@ Route::get('/', function () {
 
 //Route::get( '/', ['as' => 'site', 'uses' => 'Fronts\IndexController@index'] );
 
-Route::group(['prefix' => 'admin-site', 'middleware' => ['web']], function () {
+Route::group(['prefix' => 'administrator', 'middleware' => ['web']], function () {
     Route::get( 'login', ['as' => 'login', 'uses' => 'Admin\UserController@login'] );
     Route::post( 'login', ['as' => 'login_post', 'uses' => 'Admin\UserController@loginPost'] );
     Route::get( 'logout', ['as' => 'logout', 'uses' => 'Admin\UserController@logOut'] );

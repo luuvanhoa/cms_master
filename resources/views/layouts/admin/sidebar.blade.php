@@ -7,7 +7,7 @@
 		<!-- menu profile quick info -->
 		<div class="profile clearfix">
 			<div class="profile_pic">
-				{!! Html::image('admin/images/img.jpg', 'me', array('class' =>'img-circle profile_img')) !!}
+				{!! Html::image('st-admin/images/img.jpg', 'me', array('class' =>'img-circle profile_img')) !!}
 			</div>
 			<div class="profile_info">
 				<span>Welcome,</span>
@@ -149,7 +149,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li class="">
 					<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-						{!! Html::image('admin/images/img.jpg', 'me') !!}
+						{!! Html::image('st-admin/images/img.jpg', 'me') !!}
 						John Doe
 						<span class=" fa fa-angle-down"></span>
 					</a>

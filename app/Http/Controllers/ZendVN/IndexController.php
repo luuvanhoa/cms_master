@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Products;
+namespace App\Http\Controllers\ZendVN;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
