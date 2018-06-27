@@ -11,15 +11,15 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
         	'id'=> 1,
 			'name' => 'admin',
-			'password' => Hash::make('admin'),
 			'username' => 'admin',
-			'email' => 'admin@gmail.com',
-            'admin' => 1,
+            'fullname' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('admin'),
             'group_id' => 1,
             'address' => '',
             'phone' => '',
             'birthday' => Carbon::now(),
-            'confirmation_code' => ''
+            'token_login' => ''
 		]);
     }
 }

@@ -15,6 +15,17 @@ class CreateUsersCoursesTable extends Migration
     {
         Schema::create('users_courses', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('course_id');
+            $table->integer('user_id');
+            $table->integer('status')->nullable(true)->default(0);
+            $table->integer('payment')->nullable(true)->default(0);
+            $table->dateTime('payment_time')->nullable(true)->default(null);
+            $table->integer('payment_type')->nullable(true)->default(0);
+            $table->string('note')->nullable(true)->default(null);
+            $table->dateTime('modified_time')->nullable(true)->default(null);
+            $table->string('modified_by')->nullable(true)->default(null);
+            $table->dateTime('create_time')->nullable(true)->default(null);
+            $table->string('create_by')->nullable(true)->default(null);
             $table->timestamps();
         });
     }

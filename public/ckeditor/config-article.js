@@ -1,7 +1,7 @@
 
 CKEDITOR.editorConfig = function( config ) {
 	config.language = 'vi';
-	config.height	= 150;
+	config.height	= 730;
   	config.toolbarGroups = [
         { name: 'tools' },
         { name: 'links' },

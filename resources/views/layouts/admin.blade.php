@@ -51,8 +51,11 @@
 	{!! Html::script('st-admin/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') !!}
 	{!! Html::script('st-admin/vendors/moment/min/moment.min.js') !!}
 	{!! Html::script('st-admin/vendors/bootstrap-daterangepicker/daterangepicker.js') !!}
+	{!! Html::script('st-admin/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') !!}
 
+	@yield('js_customer')
 	{!! Html::script('st-admin/js/custom.min.js') !!}
 
-	</body>
+
+</body>
 </html>

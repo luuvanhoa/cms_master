@@ -13,12 +13,44 @@ use Hash;
 
 class UserController extends Controller
 {
+    protected $_limit = 15;
 
-    public function index()
+    public function __construct()
     {
-        $breadcrumbs = array('user-list', null);
-        $users = DB::table('users')->paginate(10);
-        return view ('admin.user.index')->with(compact('users','breadcrumbs'));
+        $this->_limit = env('LIMIT_SHOW_LIST', $this->_limit);
+    }
+
+    public function index(Request $request)
+    {
+        $params_default = array('title' => '', 'email' => '', 'group_id' => 0, 'status' => 0);
+        $params = array_merge($params_default, $request->all());
+
+        $model = DB::table('users');
+        $model->where('id', '>', 0);
+
+        if ($params['title'] && $params['title'] != '') {
+            if (intval($params['title']) > 0) {
+                $model->where('id', intval($params['title']));
+            } else {
+                $model->where('fullname', 'like', '%' . $params['title'] . '%');
+            }
+        }
+
+        if ($params['email'] && $params['email'] != '') {
+            $model->where('email', 'like', $params['email'] . '%');
+        }
+
+        if ($params['group_id'] && intval($params['group_id']) > 0) {
+            $model->where('group_id', intval($params['group_id']));
+        }
+
+        if ($params['status'] && intval($params['status']) > 0) {
+            $model->where('status', intval($params['status']));
+        }
+
+        $users = $model->paginate($this->_limit);
+
+        return view('admin.user.index')->with(compact('users', 'params'));
     }
 
     public function formUser()
@@ -31,64 +63,64 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $breadcrumbs = array('user-edit', $user);
-        return view('admin.user.edit-user')->with(compact('user','breadcrumbs'));
+        return view('admin.user.edit-user')->with(compact('user', 'breadcrumbs'));
     }
 
     public function storeUser($id, Request $request)
     {
         $users = User::find($id);
 
-        $users->name     = $request->get('name');
-        $users->username = $request->get('username');
-        $users->address  = $request->get('address');
-        $users->phone    = $request->get('phone');
+        $users->address = $request->get('address');
+        $users->group_id = $request->get('group_id');
+        $users->phone = $request->get('phone');
+        $users->status = $request->get('status');
         $users->birthday = $request->get('birthday');
-        $users->admin    = $request->get('admin');
+        $users->fullname = $request->get('fullname');
 
-        if ( !empty($request->get('password')) )
+        if (!empty($request->get('password'))) {
             $users->password = Hash::make($request->get('password'));
+        }
 
         $users->save();
-        return redirect('/admin/user');
+        return redirect(route('user-list'));
     }
 
     public function delUser($id)
     {
         $users = User::find($id);
         $users->delete();
-        return redirect('/admin/user');
+        return redirect(route('user-list'));
     }
 
     public function addUser(LoginAdminRquest $request)
     {
-        $admin  = $request->get('admin') == 'Admin' ? 1 : 0;
-        $data   = array(
-            'username'  => $request->get('username'),
-            'name'      => $request->get('name'),
-            'email'     => $request->get('email'),
-            'password'  => bcrypt($request->get('password')),
-            'phone'     => $request->get('phone'),
-            'admin'     => $request->get('admin'),
-            'address'   => $request->get('address'),
-            'birthday'  => date( 'Y-m-d', strtotime($request->get('birthday')) ),
+        $data = array(
+            'username' => $request->get('username'),
+            'fullname' => $request->get('fullname'),
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password')),
+            'phone' => $request->get('phone'),
+            'group_id' => $request->get('group_id'),
+            'address' => $request->get('address'),
+            'birthday' => date('Y-m-d', strtotime($request->get('birthday'))),
         );
 
         User::create($data);
-        return redirect('/admin/user');
+        return redirect(route('user-list'));
     }
 
     public function login()
     {
-    	return view('admin.user.login');
+        return view('admin.user.login');
     }
 
     public function loginPost(Request $request)
     {
-    	$email 		= $request->get('email');
-    	$password 	= $request->get('password');
-        if(Auth::attempt(['email' => $email, 'password' => $password, 'admin' => 1]) ){
+        $email = $request->get('email');
+        $password = $request->get('password');
+        if (Auth::attempt(['email' => $email, 'password' => $password, 'admin' => 1])) {
             return redirect('/admin/dashboard');
-        } else{
+        } else {
             return redirect('/admin/login');
         }
     }

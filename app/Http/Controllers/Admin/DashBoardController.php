@@ -12,7 +12,6 @@ class DashBoardController extends Controller
 {
     public function index(Request $request)
     {
-        dd('đd');
         return view('admin.dashboard.dashboard');//->with(compact('breadcrumbs'));
     }
 }

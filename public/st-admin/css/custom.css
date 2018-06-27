@@ -4268,8 +4268,40 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 }
 .action-td > a{
     margin: 0px;
-    margin-top: -10px;
+    /*margin-top: -10px;*/
 }
 .maxwform{
     max-width: 400px;
+}
+.list-courses {
+    border-bottom: 1px dotted;
+    padding-bottom: 9px;
+}
+.list-courses button {
+    float: right;
+}
+
+.form-filter .form-control{
+    margin-bottom: 10px;
+}
+.text-center{
+    text-align: center;
+}
+.mt10{
+    margin-top: 10px;
+}
+.mt20{
+    margin-top: 20px;
+}
+.mt30{
+    margin-top: 30px;
+}
+.mb10{
+    margin-bottom: 10px;
+}
+.mb20{
+    margin-bottom: 20px;
+}
+.mb30{
+    margin-bottom: 30px;
 }
