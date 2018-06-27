@@ -5,9 +5,6 @@
 		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-6">
 			<h3 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-user"></i> Danh sách học viên</h3>
 		</div>
-		<div class="col-xs-6">
-			<a href="{{route('student-add')}}" class="mt20 pull-right btn btn-success">Thêm khóa học</a>
-		</div>
 	</div>
 @endsection
 

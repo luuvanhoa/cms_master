@@ -22,7 +22,7 @@ class StudentRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:255',
+            'course_id' => 'required',
             // 'image'     => 'required|min:3|max:255',
         ];
     }
@@ -30,9 +30,7 @@ class StudentRequest extends Request
     public function messages()
     {
         return [
-            'name.required' => 'Vui lòng nhập tên khóa học',
-            'name.min' => 'Tên khóa học quá ngắn (từ 3 đến 255 ký tự)',
-            'name.max' => 'Tên khóa học quá dài (từ 3 đến 255 ký tự)'
+            'course_id.required' => 'Vui lòng nhập tên khóa học',
         ];
     }
 }

@@ -35,15 +35,15 @@
 			<div class="jarviswidget" id="wid-id-0" data-widget-colorbutton="false" data-widget-editbutton="false">
 				<div>
 					<div class="widget-body">
+                        <?php if(!empty($infoUser)) : ?>
 						{!! Form::open(array(
 							'id' => 'submit_form',
 							'class' => 'form-horizontal ',
 							'method' => 'POST',
-							'url'=> route('user-add-post')
+							'url'=> route('student-add-post', $infoUser->id)
 						)) !!}
 							<fieldset>
 								<legend>Input info users</legend>
-                                <?php if(!empty($infoUser)) : ?>
 
 								{!! Form::hidden('user_id', $infoUser->id) !!}
 								<div class="form-group">
@@ -83,7 +83,6 @@
 									@endforeach
 								@endif
 
-
 								@if (count($errors) > 0)
 									<div class="alert alert-danger">
 										<ul>
@@ -99,11 +98,7 @@
 									<label class="col-md-2 control-label">Select course</label>
 									<div class="col-md-8">
 										{!! Form::select('course_id',
-											array(
-											  	'1' => 'Member',
-											  	'2' => 'Manager',
-											  	'10' => 'Admin'
-											),
+											$listCourseSlbox,
 											'',
 											array( 'class' => 'form-control' )
 										) !!}
@@ -155,9 +150,9 @@
 										<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
 									</div>
 								</div>
-								<?php endif;?>
 							</fieldset>
 						{!! Form::close() !!}
+						<?php endif;?>
 					</div>
 					<!-- end widget content -->
 				</div>
