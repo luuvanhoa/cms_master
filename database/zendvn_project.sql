@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2018 at 01:39 AM
+-- Generation Time: Jun 28, 2018 at 06:18 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -21,6 +21,21 @@ SET time_zone = "+00:00";
 --
 -- Database: `zendvn_project`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_students` (IN `p_offset` INT, IN `p_limit` INT)  BEGIN
+   	SELECT user_id, email, phone, last_login, u1.status, u1.username, u1.fullname, GROUP_CONCAT(course_id, ':', c.name, ':', u.status) as list_courses
+	FROM users_courses u
+   		INNER JOIN courses c ON u.course_id = c.id
+   		INNER JOIN users u1 ON u.user_id = u1.id
+	GROUP BY user_id
+    LIMIT p_offset, p_limit;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -427,8 +442,8 @@ CREATE TABLE `users` (
   `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `register_date` date DEFAULT NULL,
-  `last_login` date DEFAULT NULL,
+  `register_date` datetime DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL,
   `token_login` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -440,8 +455,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `fullname`, `email`, `status`, `group_id`, `password`, `address`, `phone`, `birthday`, `register_date`, `last_login`, `token_login`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1000001, 'hoalv123', 'Lưu Văn Hòa', 'admin@gmail.com', 2, 10, '$2y$10$0KX8bJSxnomTbgVjczSJB.aFcaSH7edJT2zjKogX3zV/pLYUt7T6a', 'adf', '01659213296', '2018-06-21', '2018-06-21', NULL, NULL, '2018-06-21 09:25:07', '2018-06-24 07:08:13', NULL),
-(1000002, 'hoaluu', 'Lưu Hòa', 'luuvanhoa001@gmail.com', 1, 2, '$2y$10$tbJA/r54oIuABmkYtG4Oe.2Qf7VFY4bnQrOAXKaSS2YEYQYuX.vD6', 'adf', '01659213296', '2018-06-24', NULL, NULL, NULL, '2018-06-23 18:51:04', '2018-06-23 18:51:04', NULL);
+(1000001, 'hoalv123', 'Lưu Văn Hòa', 'admin@gmail.com', 2, 10, '$2y$10$0KX8bJSxnomTbgVjczSJB.aFcaSH7edJT2zjKogX3zV/pLYUt7T6a', 'adf', '01659213296', '2018-06-21', '2018-06-21 00:00:00', '2018-06-21 00:00:00', NULL, '2018-06-21 09:25:07', '2018-06-24 07:08:13', NULL),
+(1000002, 'hoaluu', 'Lưu Hòa', 'luuvanhoa001@gmail.com', 1, 2, '$2y$10$tbJA/r54oIuABmkYtG4Oe.2Qf7VFY4bnQrOAXKaSS2YEYQYuX.vD6', 'adf', '01659213296', '2018-06-24', NULL, '2018-06-21 00:00:00', NULL, '2018-06-23 18:51:04', '2018-06-23 18:51:04', NULL);
 
 -- --------------------------------------------------------
 
@@ -473,7 +488,8 @@ CREATE TABLE `users_courses` (
 INSERT INTO `users_courses` (`id`, `course_id`, `user_id`, `status`, `payment`, `payment_time`, `payment_type`, `note`, `modified_time`, `modified_by`, `create_time`, `create_by`, `created_at`, `updated_at`) VALUES
 (1, 1, 1000002, 1, 1111111, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (2, 2, 1000002, 2, 1500000, '2018-06-27 22:04:26', 0, 'nộp bài', NULL, NULL, NULL, NULL, '2018-06-27 08:26:54', '2018-06-27 08:26:54'),
-(3, 2, 1000002, 1, 753951, '2018-06-27 22:04:26', 0, 'nộp bài', NULL, NULL, NULL, NULL, '2018-06-27 08:31:00', '2018-06-27 08:31:00');
+(3, 2, 1000001, 1, 753951, '2018-06-27 22:04:26', 0, 'nộp bài', NULL, NULL, NULL, NULL, '2018-06-27 08:31:00', '2018-06-27 08:31:00'),
+(11, 2, 1000002, 1, 753951, '2018-06-27 22:04:26', 0, 'nộp bài', NULL, NULL, NULL, NULL, '2018-06-27 08:31:00', '2018-06-27 08:31:00');
 
 --
 -- Indexes for dumped tables
@@ -685,7 +701,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users_courses`
 --
 ALTER TABLE `users_courses`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
