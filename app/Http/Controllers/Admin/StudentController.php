@@ -26,7 +26,7 @@ class StudentController extends Controller
 
     public function index()
     {
-        $students = DB::table('users')->paginate(10);
+        $students = DB::select('CALL get_students (0, 21) ');
         return view('admin.student.index')->with(compact('students'));
     }
 

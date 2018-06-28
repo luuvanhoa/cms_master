@@ -73,10 +73,11 @@
 									@foreach ($coursesOfUser as $course)
 										<div class="form-group">
 											<label class="col-md-2"></label>
-											<?php $labelStatus = ($course->status == 1) ? 'success' : 'danger'; ?>
+											<?php $labelStatus = ($course->status == 1) ? 'success' : 'warning'; ?>
 											<div class="col-md-6 list-courses">
 												{{$i}}. {{$course->course_name}}
-												<?php echo '<button type="button" class="btn btn-'.$labelStatus.' btn-xs">'.env('STATUS_' . $course->status, '').'</button>';?>
+                                                <?php echo '<button type="button" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Remove</button>';?>
+                                                <?php echo '<button type="button" class="btn btn-'.$labelStatus.' btn-xs">'.env('STATUS_' . $course->status, '').'</button>';?>
 											</div>
 										</div>
 										<?php $i++; ?>

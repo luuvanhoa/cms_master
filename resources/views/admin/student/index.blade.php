@@ -19,41 +19,60 @@
 							<table id="dt_basic" class="table table-striped table-bordered table-hover" width="100%">
 								<thead>
 									<tr>
-										<th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Thông tin</th>
-										<th>Điện thoại</th>
-										<th>Danh sách khóa học</th>
+										<th><i class="fa fa-fw fa-user text-muted hidden-md hidden-sm hidden-xs"></i>Info Name</th>
+										<th>Phone</th>
+										<th>List course of users</th>
 										<th><i class="fa fa-fw fa-calendar txt-color-blue hidden-md hidden-sm hidden-xs"></i> Last login</th>
-										<th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i>Tình trạng</th>
-										<th>Thao tác</th>
+										<th><i class="fa fa-fw fa-user txt-color-blue hidden-md hidden-sm hidden-xs"></i>Status</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
-								@if(!empty($users))
-									<?php $userGroup = array(
-                                        '1' => 'Member',
-                                        '2' => 'Manager',
-                                        '10' => 'Admin'
-                                    );?>
-
-									@foreach ( $users as $user )
+								@if(!empty($students))
+									@foreach ( $students as $student )
 										<tr>
-											<td>{{$user->id}}</td>
-											<td>{{$user->username}}</td>
-											<td>{{$user->email}}</td>
-											<td>{{$user->status}}</td>
-											<td>{{$user->phone}}</td>
 											<td>
-												<?php echo $userGroup[$user->group_id];?>
+												<strong>{{ $student->fullname . ' - ' .$student->user_id}}</strong>
+												<p><strong>Email: </strong>{{$student->email}}</p>
 											</td>
-											<td>{{$user->created_at}}</td>
-											<td>{{$user->last_login}}</td>
-											<td role="gridcell" aria-describedby="jqgrid_act">
-												<a href="{{route('user-edit', $user->id)}}" data-toggle="tooltip" title="Chỉnh sửa học viên" class="btn btn-xs btn-default">
-													<i class="fa fa-pencil"></i>
+											<td align="center">{{$student->phone}}</td>
+											<td>
+                                                <?php
+                                                $dataCourse = explode(',', $student->list_courses);
+                                                $str_course = '';
+                                                $total = 0;
+                                                if (!empty($dataCourse)) {
+                                                    foreach ($dataCourse as $stt => $course) {
+                                                        $courseName = explode(':', $course);
+                                                        $lStatus = ($courseName[2] == 1) ? 'blue' : 'red';
+                                                        $button = '<span class="badge bg-' . $lStatus . '">' . env('STATUS_' . $courseName[2], '') . '</span>';
+                                                        $str_course .= '<p class="list-course-td">' . ($stt + 1) . '. ' . $courseName[1] . ' ' . $button . '</p>';
+                                                        $total++;
+                                                    }
+                                                }
+                                                ?>
+												<p><strong>Total: {{$total}}</strong></p>
+												<div class="list-student">
+													{!! $str_course !!}
+												</div>
+												<?php if($total>2){
+													echo '<span class="btn btn-success btn-xs toggle-view down">View all <i class="fa fa-chevron-down"></i></span>';
+												}?>
+											</td>
+											<td align="center">{{$student->last_login}}</td>
+											<td align="center">
+												<p>
+													<?php $labelStatus = ($student->status == 1) ? 'success' : 'danger'; ?>
+													<button type="button" class="btn btn-<?php echo $labelStatus; ?> btn-xs">
+														<?php echo env('STATUS_' . $student->status, '');?>
+													</button>
+												</p>
+											</td>
+											<td align="center" role="gridcell" aria-describedby="jqgrid_act">
+												<a href="{{route('student-add', $student->user_id)}}" data-toggle="tooltip" title="Chỉnh sửa học viên" class="btn btn-xs btn-default">
+													<i class="fa fa-pencil"></i> Edit
 												</a>
-												<a href="{{route('user-del', $user->id)}}" data-toggle="tooltip" title="Xóa học viên" class="btn btn-xs btn-default">
-													<i class="fa fa-times"></i>
-												</a>
+												<button type="button" class="btn btn-info btn-xs"><i class="fa fa-folder"></i> Info</button>
 											</td>
 										</tr>
 									@endforeach
@@ -65,17 +84,17 @@
 								<div class="col-sm-6 col-xs-12 hidden-xs">
 									<div class="dataTables_info" id="datatable_fixed_column_info" role="status" aria-live="polite">
 										Hiển thị <span class="txt-color-darken">
-											@if($students->perPage() > $students->total()) :
-											{{ $students->total() }}
-											@else {{ $students->perPage() }}
-											@endif
+											{{--@if($students->perPage() > $students->total()) :--}}
+											{{--{{ $students->total() }}--}}
+											{{--@else {{ $students->perPage() }}--}}
+											{{--@endif--}}
 										</span> của
-										<span class="text-primary">{{ $students->total() }}</span> học viên
+{{--										<span class="text-primary">{{ $students->total() }}</span> học viên--}}
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6">
 									<div class="dataTables_paginate paging_simple_numbers" id="datatable_fixed_column_paginate">
-										{!! $students->render() !!}
+{{--										{!! $students->render() !!}--}}
 									</div>
 								</div>
 							</div>
@@ -89,10 +108,22 @@
 
 @endsection
 
-@section('content_js')
+@section('js_customer')
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    $('[data-toggle="tooltip"]').tooltip();
+
+            $('.toggle-view').click(function () {
+				$(this).closest('td').find('.list-student').css('max-height', 'initial');
+				if($(this).hasClass('down')){
+				    $(this).removeClass('down');
+                    $(this).html('Collapse <i class="fa fa-chevron-up"></i>');
+                } else {
+                    $(this).addClass('down');
+                    $(this).closest('td').find('.list-student').css('max-height', '40px');
+                    $(this).html('View all <i class="fa fa-chevron-down"></i>');
+                }
+            });
 		});
 	</script>
 @endsection
