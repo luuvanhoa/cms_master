@@ -72,7 +72,7 @@
 												<a href="{{route('student-add', $student->user_id)}}" data-toggle="tooltip" title="Chỉnh sửa học viên" class="btn btn-xs btn-default">
 													<i class="fa fa-pencil"></i> Edit
 												</a>
-												<button type="button" class="btn btn-info btn-xs"><i class="fa fa-folder"></i> Info</button>
+												<button type="button" class="btn btn-info btn-xs" onclick="viewInfo('<?php echo $student->user_id; ?>')"><i class="fa fa-folder"></i> Info</button>
 											</td>
 										</tr>
 									@endforeach
@@ -106,6 +106,37 @@
 		</div>
 	</section>
 
+	<div id="gridSystemModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title" style="float:left;" id="gridModalLabel">Info student</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid bd-example-row">
+                        <div class="list-info">
+                            <span class="col-md-3 label">Username</span>
+                            <span class="col-md-8 value" id="_username"></span>
+                        </div>
+                        <div class="list-info">
+                            <span class="col-md-3 label">Fullname</span>
+                            <span class="col-md-8 value" id="_fullname"></span>
+                        </div>
+                        <div class="list-info">
+                            <span class="col-md-3 label">Email</span>
+                            <span class="col-md-8 value" id="_email"></span>
+                        </div>
+                    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<button id="btn-view-info" type="button" data-toggle="modal" data-target="#gridSystemModal" style="display: none"></button>
 @endsection
 
 @section('js_customer')
@@ -114,9 +145,9 @@
 		    $('[data-toggle="tooltip"]').tooltip();
 
             $('.toggle-view').click(function () {
-				$(this).closest('td').find('.list-student').css('max-height', 'initial');
-				if($(this).hasClass('down')){
-				    $(this).removeClass('down');
+                $(this).closest('td').find('.list-student').css('max-height', 'initial');
+                if ($(this).hasClass('down')) {
+                    $(this).removeClass('down');
                     $(this).html('Collapse <i class="fa fa-chevron-up"></i>');
                 } else {
                     $(this).addClass('down');
@@ -124,6 +155,26 @@
                     $(this).html('View all <i class="fa fa-chevron-down"></i>');
                 }
             });
-		});
+        });
+
+        function viewInfo(user_id) {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo route('student-view-info');?>",
+                headers: {'X-CSRF-TOKEN': token},
+                data: {
+                    user_id: user_id
+                },
+                success: function (response) {
+                    var Obj = $.parseJSON(response);
+                    var userInfo = Obj.infoUser;
+                    var coursesOfUser = Obj.coursesOfUser;
+                    $('#_username').html(userInfo.username);
+                    $('#_fullname').html(userInfo.fullname);
+                    $('#_email').html(userInfo.email);
+                    $('#btn-view-info').click();
+                }
+            });
+        }
 	</script>
 @endsection

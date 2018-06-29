@@ -41,6 +41,7 @@ Route::group(['prefix' => 'administrator','middleware' => ['authadminRoute'] ], 
     // **** STUDENT ****
     Route::get( 'student', ['as' => 'student-list', 'uses' => 'Admin\StudentController@index'] );
     Route::get( 'student-add-{id}.html', ['as' => 'student-add', 'uses' => 'Admin\StudentController@formStudent'] );
+    Route::post( 'student-view-info', ['as' => 'student-view-info', 'uses' => 'Admin\StudentController@viewInfo'] );
     Route::post('student-add-{id}.html', ['as' => 'student-add-post', 'uses' => 'Admin\StudentController@addStudent'] );
     Route::get( 'student-edit-{id}.html', ['as' => 'student-edit', 'uses' => 'Admin\StudentController@editStudent'] );
     Route::post('student-edit-{id}.html', ['as' => 'student-edit-post', 'uses' => 'Admin\StudentController@storeStudent'] );

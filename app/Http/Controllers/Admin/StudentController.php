@@ -63,11 +63,30 @@ class StudentController extends Controller
         return view('admin.student.form-student')->with(compact('infoUser', 'coursesOfUser', 'listCourseSlbox'));
     }
 
+    public function viewInfo(Request $request)
+    {
+        $user_id = intval($request->get('user_id'));
+        $infoUser = User::find($user_id);
+
+        $t = $this->_table;
+        $t1 = $this->_table_courses;
+        $coursesOfUser = DB::table($t)
+            ->where($t . '.user_id', $user_id)
+            ->join($t1, function ($join) {
+                $join->on($this->_table . '.course_id', '=', $this->_table_courses . '.id');
+            })
+            ->select($t . '.*', $t1 . '.name as course_name')
+            ->get();
+
+        echo json_encode(array(
+            'infoUser' => $infoUser, 'coursesOfUser' => $coursesOfUser
+        ));
+    }
+
     public function editStudent($id)
     {
         $user = User::find($id);
-        $breadcrumbs = array('student-edit', $user);
-        return view('admin.student.edit-student')->with(compact('user', 'breadcrumbs'));
+        return view('admin.student.edit-student')->with(compact('user'));
     }
 
     public function storeStudent($id, Request $request)
