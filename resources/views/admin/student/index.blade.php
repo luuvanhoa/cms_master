@@ -106,8 +106,8 @@
 		</div>
 	</section>
 
-	<div id="gridSystemModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
+	<div id="gridSystemModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h3 class="modal-title" style="float:left;" id="gridModalLabel">Info student</h3>
@@ -115,6 +115,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="container-fluid bd-example-row">
+                        <legend>Info users</legend>
                         <div class="list-info">
                             <span class="col-md-3 label">Username</span>
                             <span class="col-md-8 value" id="_username"></span>
@@ -127,7 +128,8 @@
                             <span class="col-md-3 label">Email</span>
                             <span class="col-md-8 value" id="_email"></span>
                         </div>
-                    </div>
+                        <legend>List courses of users</legend>
+                        <div class="list-info" id="list-courses-users"></div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -158,6 +160,7 @@
         });
 
         function viewInfo(user_id) {
+            $('#list-courses-users').html('There are no courses available');
             $.ajax({
                 type: "POST",
                 url: "<?php echo route('student-view-info');?>",
@@ -172,6 +175,16 @@
                     $('#_username').html(userInfo.username);
                     $('#_fullname').html(userInfo.fullname);
                     $('#_email').html(userInfo.email);
+
+                    $('#list-courses-users').html('');
+                    $.each(coursesOfUser, function (i, v) {
+                        var status = (v.status == 1) ? 'Active' : 'In Active';
+                        var btn = (v.status == 1) ? 'success' : 'danger';
+                        var courses = '<div class="col-md-12 list-courses">' + parseInt(i+1) + '. ' + v.course_name +
+                                            '<button type="button" class="btn btn-'+btn+' btn-xs">'+status+'</button>' +
+                                      '</div>';
+                        $('#list-courses-users').append(courses);
+                    })
                     $('#btn-view-info').click();
                 }
             });

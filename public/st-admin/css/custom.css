@@ -5119,11 +5119,13 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
     float: left;
     text-align: left;
 }
+
 .list-info .value {
     background: #f7f7f7;
     padding: 3px;
     margin-bottom: 4px;
 }
+
 .list-info .label {
     color: #73879C;
     font-size: 13px;
@@ -5152,6 +5154,15 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
     text-align: center;
 }
 
+legend {
+    font-size: 14px;
+    color: #333;
+}
+#list-courses-users .list-courses {
+    border-bottom: 1px dotted;
+    padding-bottom: 0px;
+    padding-top: 10px;
+}
 .mt10 {
     margin-top: 10px;
 }

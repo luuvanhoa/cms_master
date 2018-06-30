@@ -43,7 +43,7 @@
 							'url'=> route('student-add-post', $infoUser->id)
 						)) !!}
 							<fieldset>
-								<legend>Input info users</legend>
+								<legend>Info users</legend>
 
 								{!! Form::hidden('user_id', $infoUser->id) !!}
 								<div class="form-group">
