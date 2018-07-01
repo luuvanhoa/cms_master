@@ -6,6 +6,45 @@
 			<h3 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-user"></i> Danh sách học viên</h3>
 		</div>
 	</div>
+
+    <div class="row">
+        {!! Form::open(array(
+            'id' => 'submit_form',
+            'class' => 'form-horizontal ',
+            'method' => 'get'
+        )) !!}
+        <div class="form-group form-filter">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <input type="text" class="form-control" value="{{$params['title']}}" name="title" placeholder="Fullname or ID">
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <input type="text" class="form-control" value="{{$params['email']}}" name="email" placeholder="Email">
+            </div>
+            <div class="col-md-2 col-sm-6 col-xs-12">
+                {!! Form::select('status',
+                    array(
+                        'all' => 'Select status',
+                        '1' => 'Active',
+                        '2' => 'In Active'
+                    ),
+                    $params['status'],
+                    array( 'class' => 'form-control' )
+                ) !!}
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                {!! Form::select('course_id',
+                    $listCourseSlbox,
+                    $params['course_id'],
+                    array( 'class' => 'form-control' )
+                ) !!}
+            </div>
+            <div class="col-md-1 col-sm-6 col-xs-12">
+                <button type="submit" class="btn btn-success">Filter</button>
+            </div>
+        </div>
+
+        {!! Form::close() !!}
+    </div>
 @endsection
 
 @section('content')
@@ -83,18 +122,18 @@
 							<div class="dt-toolbar-footer">
 								<div class="col-sm-6 col-xs-12 hidden-xs">
 									<div class="dataTables_info" id="datatable_fixed_column_info" role="status" aria-live="polite">
-										Hiển thị <span class="txt-color-darken">
-											{{--@if($students->perPage() > $students->total()) :--}}
-											{{--{{ $students->total() }}--}}
-											{{--@else {{ $students->perPage() }}--}}
-											{{--@endif--}}
-										</span> của
-{{--										<span class="text-primary">{{ $students->total() }}</span> học viên--}}
+										Show <span class="txt-color-darken">
+											@if($paginator->perPage() > $paginator->total()) :
+											{{ $paginator->total() }}
+											@else {{ $paginator->perPage() }}
+											@endif
+										</span> of
+										<span class="text-primary">{{ $paginator->total() }}</span> students
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6">
 									<div class="dataTables_paginate paging_simple_numbers" id="datatable_fixed_column_paginate">
-{{--										{!! $students->render() !!}--}}
+										{!! $paginator->render() !!}
 									</div>
 								</div>
 							</div>
@@ -180,9 +219,9 @@
                     $.each(coursesOfUser, function (i, v) {
                         var status = (v.status == 1) ? 'Active' : 'In Active';
                         var btn = (v.status == 1) ? 'success' : 'danger';
-                        var courses = '<div class="col-md-12 list-courses">' + parseInt(i+1) + '. ' + v.course_name +
-                                            '<button type="button" class="btn btn-'+btn+' btn-xs">'+status+'</button>' +
-                                      '</div>';
+                        var courses = '<div class="col-md-12 list-courses">' + parseInt(i + 1) + '. ' + v.course_name +
+                    		        		'<button type="button" class="btn btn-' + btn + ' btn-xs">' + status + '</button>' +
+                            		  '</div>';
                         $('#list-courses-users').append(courses);
                     })
                     $('#btn-view-info').click();

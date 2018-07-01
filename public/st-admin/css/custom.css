@@ -5153,10 +5153,19 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 .text-center {
     text-align: center;
 }
-
+.no-cursor:hover{
+    cursor: default;
+}
 legend {
     font-size: 14px;
     color: #333;
+}
+.description{
+    color: #000000;
+}
+.items {
+    color: #337ab7;
+    font-weight: bold;
 }
 #list-courses-users .list-courses {
     border-bottom: 1px dotted;

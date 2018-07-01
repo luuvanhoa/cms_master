@@ -23,10 +23,10 @@
 				<ul class="nav side-menu">
 					<li><a href="{{ Route('dashboard') }}"><i class="fa fa-home"></i> Dashboard</a></li>
 					<li>
-						<a><i class="fa fa-users"></i> Groups <span class="fa fa-chevron-down"></span><span class="label label-success pull-right">Coming Soon</span></a>
+						<a><i class="fa fa-users"></i> Groups <span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="#">Group list</a></li>
-							<li><a href="#">Add new category course</a></li>
+							<li><a href="{{route('group-list')}}">Group list</a></li>
+							<li><a href="{{route('group-add')}}">Add new group</a></li>
 						</ul>
 					</li>
 					<li>

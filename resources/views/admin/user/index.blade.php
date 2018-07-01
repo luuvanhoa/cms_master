@@ -121,13 +121,13 @@
 							<div class="dt-toolbar-footer">
 								<div class="col-sm-6 col-xs-12 hidden-xs">
 									<div class="dataTables_info" id="datatable_fixed_column_info" role="status" aria-live="polite">
-										Hiển thị <span class="txt-color-darken">
+										Show <span class="txt-color-darken">
 											@if($users->perPage() > $users->total()) :
 											{{ $users->total() }}
 											@else {{ $users->perPage() }}
 											@endif
-										</span> của
-										<span class="text-primary">{{ $users->total() }}</span> người dùng
+										</span> of
+										<span class="text-primary">{{ $users->total() }}</span> users
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6">

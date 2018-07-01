@@ -165,4 +165,40 @@ class CourseController extends Controller
         Courses::create($data);
         return redirect(route('course-list'));
     }
+
+    public function viewInfo(Request $request)
+    {
+        $course_id = intval($request->get('course_id'));
+        if ($course_id <= 0) {
+            echo json_encode(array(
+                'status' => 0
+            ));
+        }
+        $course = Courses::join($this->_table_category, function ($join) {
+            $join->on($this->_table . '.category_id', '=', $this->_table_category . '.id');
+        })->select($this->_table . '.*', $this->_table_category . '.name as category_name')->find($course_id);
+
+        if(empty($course)) {
+            echo json_encode(array(
+                'status' => 0
+            ));
+        }
+
+        $categoryModel = new CategoryCourse();
+        $cate = $categoryModel->getCourseTree(1);
+        $category = array();
+        if (!empty($cate)) {
+            foreach ($cate as $k => $v) {
+                $category[$v->id] = $v->name;
+            }
+        }
+
+        echo json_encode(array(
+            'course' => $course,
+            'category' => $category,
+            'status' => 1
+        ));
+
+        die();
+    }
 }

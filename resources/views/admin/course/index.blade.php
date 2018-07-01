@@ -54,7 +54,7 @@
 												<a href="{{route('course-edit', $course->id)}}" data-toggle="tooltip" title="Chỉnh sửa" class="btn btn-xs btn-default">
 													<i class="fa fa-pencil"></i> Edit
 												</a>
-												<button type="button" class="btn btn-info btn-xs"><i class="fa fa-folder"></i> Info</button>
+												<button type="button" class="btn btn-info btn-xs" onclick="viewInfo('<?php echo $course->id; ?>')"><i class="fa fa-folder"></i> Info</button>
 											</td>
 										</tr>
 									@endforeach
@@ -65,13 +65,13 @@
 							<div class="dt-toolbar-footer">
 								<div class="col-sm-6 col-xs-12 hidden-xs">
 									<div class="dataTables_info" id="datatable_fixed_column_info" role="status" aria-live="polite">
-										Hiển thị <span class="txt-color-darken">
+										Show <span class="txt-color-darken">
 											@if($courses->perPage() > $courses->total()) :
 											{{ $courses->total() }}
 											@else {{ $courses->perPage() }}
 											@endif
-										</span> của
-										<span class="text-primary">{{ $courses->total() }}</span> học viên
+										</span> of
+										<span class="text-primary">{{ $courses->total() }}</span> courses
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-6">
@@ -88,16 +88,75 @@
 		</div>
 	</section>
 
+	<!-- popup view info -->
+	<div id="gridSystemModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title" style="float:left;" id="gridModalLabel">Info Course</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<div class="container-fluid bd-example-row">
+						<div class="row">
+							<div class="title">
+								<h3 id="title-course"></h3>
+								<div class="items" id="category"></div>
+							</div>
+							<div class="items" id="info_price"></div>
+							<div class="items mb20" id="sale_info"></div>
+							<div class="description mb20"><strong id="description"></strong></div>
+							<div class="items" id="images"></div>
+							<div class="content" id="content"></div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<button id="btn-view-info" type="button" data-toggle="modal" data-target="#gridSystemModal" style="display: none"></button>
 @endsection
 
-@section('content_js')
+@section('js_customer')
 	<script type="text/javascript">
 		$(document).ready(function(){
 		    $('[data-toggle="tooltip"]').tooltip();
 		});
 
-        function viewInfo(id) {
+        function viewInfo(course_id) {
+            $('#list-courses-users').html('There are no courses available');
+            $.ajax({
+                type: "POST",
+                url: "<?php echo route('course-view-info');?>",
+                headers: {'X-CSRF-TOKEN': token},
+                data: {
+                    course_id: course_id
+                },
+                success: function (response) {
+                    var Obj = $.parseJSON(response);
+                    var course = Obj.course;
+                    var category = Obj.category;
+                    var text = 'Active', class_status = 'success';
+                    if (course.status == 2) {
+                        text = 'In Active';
+                        class_status = 'danger';
+                    }
+                    var status = '<span class="label label-' + class_status + ' btn-xs pull-right">' + text + '</span>';
+					var publish = '<span class="label label-info btn-xs pull-right">' + course.publish_time + '</span>';
+                    $('#title-course').html(course.name + status + publish);
+                    $('#category').html('Chuyên mục: ' + course.category_name);
+                    $('#description').html(course.description);
+                    $('#content').html(course.content);
+                    $('#info_price').html('Tuition free: ' + course.price + ' - ' + ' Tuition free old ' + course.price_old);
+                    $('#sale_info').html('Start Sale: ' + course.start_sale + ' - ' + ' End Sale ' + course.end_sale);
 
+                    console.log(Obj);
+                    $('#btn-view-info').click();
+                }
+            });
         }
 	</script>
 @endsection

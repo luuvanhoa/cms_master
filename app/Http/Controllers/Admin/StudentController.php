@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\Pagination;
 use App\Http\Models\Student;
 use App\Http\Requests\StudentRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Input;
 use Session;
 use App\User;
 use DB;
@@ -24,10 +27,45 @@ class StudentController extends Controller
         $this->_limit = env('LIMIT_SHOW_LIST', $this->_limit);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $students = DB::select('CALL get_students (0, 21) ');
-        return view('admin.student.index')->with(compact('students'));
+        $params_default = array('title' => '', 'email' => '', 'course_id' => 0, 'status' => 0);
+        $params = array_merge($params_default, $request->all());
+
+        // lấy data đổ vào select box
+        $dataCourseObj = DB::table($this->_table_courses)
+            ->select('name', 'id')
+            ->get();
+        $listCourseSlbox[0] = 'Select courses';
+        if (count($dataCourseObj) > 0) {
+            foreach ($dataCourseObj as $course) {
+                $listCourseSlbox[$course->id] = $course->name;
+            }
+        }
+
+
+        $page = intval(Input::get('page', 1));
+        $offSet = ($page - 1) * $this->_limit;
+
+        // List student - sp: get_students(offset, limit, title, email, course_id, status, @total)
+        $students = DB::select('CALL 
+            get_students (?, ?, ?, ?, ?, ?, @total)',
+            array(
+                $offSet,
+                $this->_limit,
+                $params['title'],
+                $params['email'],
+                $params['course_id'],
+                $params['status']
+            )
+        );
+
+        // Pagination
+        $total = DB::select('select @total as total');
+        $paginator = new LengthAwarePaginator(array(), $total[0]->total, $this->_limit, $page);
+        $paginator->setPath('/administrator/student');
+
+        return view('admin.student.index')->with(compact('students', 'paginator', 'params', 'listCourseSlbox'));
     }
 
     public function formStudent($user_id)
@@ -81,6 +119,7 @@ class StudentController extends Controller
         echo json_encode(array(
             'infoUser' => $infoUser, 'coursesOfUser' => $coursesOfUser
         ));
+        die();
     }
 
     public function editStudent($id)
@@ -108,11 +147,64 @@ class StudentController extends Controller
         return redirect(route('student-list'));
     }
 
-    public function delStudent($id)
+    public function delStudent(Request $request, $_user_id)
     {
-        $users = User::find($id);
-        $users->delete();
-        return redirect(route('student-list'));
+        $user_id = $request->get('user_id');
+        $_id = $request->get('id');
+        $_sign = $request->get('sign');
+        $sign = md5($_id . $user_id . $_id);
+        if ($sign != $_sign || $_user_id != $user_id) {
+            echo json_encode(array(
+                'msg' => 'Sign invalid',
+                'status' => 0
+            ));
+        }
+
+        $student = Student::find($_id);
+        $status = $is_delete = 0;
+        if (!empty($student)) {
+            $is_delete = $student->delete();
+            $status = 1;
+        }
+
+        echo json_encode(array(
+            'msg' => 'Delete is success',
+            'status' => $status,
+            'is_delete' => $is_delete,
+        ));
+        die();
+    }
+
+    public function changeStatus(Request $request, $_user_id)
+    {
+        $user_id = $request->get('user_id');
+        $_id = $request->get('id');
+        $_sign = $request->get('sign');
+        $sign = md5($_id . $user_id . $_id);
+        if ($sign != $_sign || $_user_id != $user_id) {
+            echo json_encode(array(
+                'msg' => 'Sign invalid',
+                'status' => 0
+            ));
+        }
+
+        $student = Student::find($_id);
+        $status = 0;
+        $dataBtn = array();
+        if (!empty($student)) {
+            $student->status = ($student->status == 1) ? 2 : 1;
+            $dataBtn['text'] = ($student->status == 1) ? 'Active' : 'In Active';
+            $dataBtn['class'] = ($student->status == 1) ? 'success' : 'warning';
+            $student->save();
+            $status = 1;
+        }
+
+        echo json_encode(array(
+            'msg' => 'Change status is success',
+            'status' => $status,
+            'dataBtn' => $dataBtn
+        ));
+        die();
     }
 
     public function addStudent(StudentRequest $request)

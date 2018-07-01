@@ -35,7 +35,7 @@
 				@yield('content')
 			</div>
 			<footer><!-- footer content -->
-				<div class="pull-right">Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a></div>
+				<div class="pull-right">Administrator - Bản quyền của Công Ty Lập Trình <a href="https://zendvn.com">ZendVN.com</a></div>
 				<div class="clearfix"></div>
 			</footer> <!-- /footer content -->
 		</div> <!-- main_container -->

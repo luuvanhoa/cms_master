@@ -67,7 +67,7 @@
 		var status_change = (status == 0) ? 1 : 0;
 		$.ajax({
 		    type 	: "POST",
-		    url		: "<?php echo $urlChangeStatus;?>",
+		    url		: "<?php echo route('article-category-status');?>",
 		    headers : {'X-CSRF-TOKEN': token},
 		    data 	: {
 		        id	: id,
