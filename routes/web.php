@@ -58,6 +58,15 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['authadminRoute']], 
     Route::post('student/change-status-{id}.html', ['as' => 'student-status', 'uses' => 'Admin\StudentController@changeStatus']);
     // **** STUDENT ****
 
+    // **** TEACHERS ****
+    Route::get('teachers', ['as' => 'teachers-list', 'uses' => 'Admin\TeachersController@index']);
+    Route::get('teachers-add.html', ['as' => 'teachers-add', 'uses' => 'Admin\TeachersController@formTeacher']);
+    Route::post('teachers-add.html', ['as' => 'teachers-add-post', 'uses' => 'Admin\TeachersController@addTeacher']);
+    Route::get('teachers-edit-{id}.html', ['as' => 'teachers-edit', 'uses' => 'Admin\TeachersController@editTeacher']);
+    Route::post('teachers-edit-{id}.html', ['as' => 'teachers-edit-post', 'uses' => 'Admin\TeachersController@storeTeacher']);
+    Route::get('teachers-del-{id}.html', ['as' => 'teachers-del', 'uses' => 'Admin\TeachersController@delTeacher']);
+    // **** TEACHERS ****
+
     // **** CATEGORY COURSE ****
     Route::get('category-course', ['as' => 'category-course-list', 'uses' => 'Admin\CategoryCourseController@index']);
     Route::get('category-course-add.html', ['as' => 'category-course-add', 'uses' => 'Admin\CategoryCourseController@formCategoryCourse']);
