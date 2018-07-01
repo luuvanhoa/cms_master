@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2018 at 06:18 PM
+-- Generation Time: Jul 01, 2018 at 05:32 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -26,13 +26,18 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_students` (IN `p_offset` INT, IN `p_limit` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_students` (IN `p_offset` INT, IN `p_limit` INT, IN `p_title` VARCHAR(255) CHARSET utf8, IN `p_email` VARCHAR(255) CHARSET utf8, IN `p_course_id` INT, IN `p_status` INT, OUT `total` INT)  BEGIN 
+    
    	SELECT user_id, email, phone, last_login, u1.status, u1.username, u1.fullname, GROUP_CONCAT(course_id, ':', c.name, ':', u.status) as list_courses
 	FROM users_courses u
    		INNER JOIN courses c ON u.course_id = c.id
    		INNER JOIN users u1 ON u.user_id = u1.id
-	GROUP BY user_id
-    LIMIT p_offset, p_limit;
+    WHERE user_id > 0
+     
+    GROUP BY user_id 
+    LIMIT p_offset, p_limit; 
+    
+    SELECT COUNT(DISTINCT user_id) INTO total FROM users_courses;
 END$$
 
 DELIMITER ;
@@ -255,13 +260,22 @@ CREATE TABLE `group` (
   `group_acp` int(11) NOT NULL,
   `privilege_id` int(11) NOT NULL,
   `ordering` int(11) NOT NULL,
-  `created_by` datetime NOT NULL,
-  `created_time` datetime NOT NULL,
-  `modified_by` datetime NOT NULL,
-  `modified_time` datetime NOT NULL,
+  `created_by` datetime DEFAULT NULL,
+  `created_time` datetime DEFAULT NULL,
+  `modified_by` datetime DEFAULT NULL,
+  `modified_time` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `group`
+--
+
+INSERT INTO `group` (`id`, `name`, `group_acp`, `privilege_id`, `ordering`, `created_by`, `created_time`, `modified_by`, `modified_time`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 1, 1, 10, NULL, '2018-07-01 11:31:01', NULL, '2018-07-01 11:55:14', '2018-07-01 04:31:01', '2018-07-01 04:55:14'),
+(2, 'Manager', 1, 2, 10, NULL, '2018-07-01 11:59:26', NULL, '2018-07-01 11:59:52', '2018-07-01 04:59:26', '2018-07-01 04:59:52'),
+(3, 'Member', 1, 3, 10, NULL, '2018-07-01 11:59:35', NULL, '2018-07-01 11:59:46', '2018-07-01 04:59:35', '2018-07-01 04:59:46');
 
 -- --------------------------------------------------------
 
@@ -487,9 +501,8 @@ CREATE TABLE `users_courses` (
 
 INSERT INTO `users_courses` (`id`, `course_id`, `user_id`, `status`, `payment`, `payment_time`, `payment_type`, `note`, `modified_time`, `modified_by`, `create_time`, `create_by`, `created_at`, `updated_at`) VALUES
 (1, 1, 1000002, 1, 1111111, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 2, 1000002, 2, 1500000, '2018-06-27 22:04:26', 0, 'nộp bài', NULL, NULL, NULL, NULL, '2018-06-27 08:26:54', '2018-06-27 08:26:54'),
 (3, 2, 1000001, 1, 753951, '2018-06-27 22:04:26', 0, 'nộp bài', NULL, NULL, NULL, NULL, '2018-06-27 08:31:00', '2018-06-27 08:31:00'),
-(11, 2, 1000002, 1, 753951, '2018-06-27 22:04:26', 0, 'nộp bài', NULL, NULL, NULL, NULL, '2018-06-27 08:31:00', '2018-06-27 08:31:00');
+(11, 2, 1000002, 1, 753951, '2018-06-27 22:04:26', 0, 'nộp bài', NULL, NULL, NULL, NULL, '2018-06-27 08:31:00', '2018-06-30 20:02:47');
 
 --
 -- Indexes for dumped tables
@@ -647,7 +660,7 @@ ALTER TABLE `favorites_courses`
 -- AUTO_INCREMENT for table `group`
 --
 ALTER TABLE `group`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `menu_admin`
