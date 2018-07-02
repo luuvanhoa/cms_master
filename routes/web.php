@@ -59,12 +59,12 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['authadminRoute']], 
     // **** STUDENT ****
 
     // **** TEACHERS ****
-    Route::get('teachers', ['as' => 'teachers-list', 'uses' => 'Admin\TeachersController@index']);
-    Route::get('teachers-add.html', ['as' => 'teachers-add', 'uses' => 'Admin\TeachersController@formTeacher']);
-    Route::post('teachers-add.html', ['as' => 'teachers-add-post', 'uses' => 'Admin\TeachersController@addTeacher']);
-    Route::get('teachers-edit-{id}.html', ['as' => 'teachers-edit', 'uses' => 'Admin\TeachersController@editTeacher']);
-    Route::post('teachers-edit-{id}.html', ['as' => 'teachers-edit-post', 'uses' => 'Admin\TeachersController@storeTeacher']);
-    Route::get('teachers-del-{id}.html', ['as' => 'teachers-del', 'uses' => 'Admin\TeachersController@delTeacher']);
+    Route::get('teachers', ['as' => 'teacher-list', 'uses' => 'Admin\TeacherController@index']);
+    Route::get('teacher-add.html', ['as' => 'teacher-add', 'uses' => 'Admin\TeacherController@formTeacher']);
+    Route::post('teacher-add.html', ['as' => 'teacher-add-post', 'uses' => 'Admin\TeacherController@addTeacher']);
+    Route::get('teacher-edit-{id}.html', ['as' => 'teacher-edit', 'uses' => 'Admin\TeacherController@editTeacher']);
+    Route::post('teacher-edit-{id}.html', ['as' => 'teacher-edit-post', 'uses' => 'Admin\TeacherController@storeTeacher']);
+    Route::get('teacher-del-{id}.html', ['as' => 'teacher-del', 'uses' => 'Admin\TeacherController@delTeacher']);
     // **** TEACHERS ****
 
     // **** CATEGORY COURSE ****

@@ -111,6 +111,7 @@ class CourseController extends Controller
 
         if (!empty($request->file('images'))) {
             $image = $request->file('images');
+            Images::deleteImage($course->images);
             $course->images = Images::createImage($image, '/img/upload/courses/');
         }
 

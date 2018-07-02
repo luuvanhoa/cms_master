@@ -38,10 +38,10 @@
 						</ul>
 					</li>
 					<li>
-						<a><i class="fa fa-child"></i> Teachers <span class="fa fa-chevron-down"></span><span class="label label-success pull-right">Coming Soon</span></a>
+						<a><i class="fa fa-child"></i> Teachers <span class="fa fa-chevron-down"></span></a>
 						<ul class="nav child_menu">
-							<li><a href="#">Teachers list</a></li>
-							<li><a href="#">Add new Teachers</a></li>
+							<li><a href="{{route('teacher-list')}}">Teachers list</a></li>
+							<li><a href="{{route('teacher-add')}}">Add new Teachers</a></li>
 						</ul>
 					</li>
 					<li>

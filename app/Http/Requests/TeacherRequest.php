@@ -22,15 +22,16 @@ class TeacherRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required',
-            // 'image'     => 'required|min:3|max:255',
+            'username' => 'required',
+            'fullname' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'Teacher.required' => 'Vui lòng nhập tên giảng viên',
+            'username.required' => 'Vui lòng nhập username',
+            'fullname.required' => 'Vui lòng nhập tên giảng viên',
         ];
     }
 }

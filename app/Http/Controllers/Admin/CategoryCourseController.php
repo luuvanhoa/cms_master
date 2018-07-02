@@ -64,6 +64,7 @@ class CategoryCourseController extends Controller
 
         if (!empty($request->file('image'))) {
             $image = $request->file('image');
+            Images::deleteImage($dataCategory->image);
             $dataCategory->image = Images::createImage($image);
         }
 
