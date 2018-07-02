@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 01, 2018 at 05:32 PM
+-- Generation Time: Jul 02, 2018 at 07:45 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -442,6 +442,40 @@ CREATE TABLE `tag_article` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `teachers`
+--
+
+CREATE TABLE `teachers` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `phone` varchar(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `description` mediumtext,
+  `content` text,
+  `info` mediumtext,
+  `cmnd` varchar(255) DEFAULT NULL,
+  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_by` varchar(255) DEFAULT NULL,
+  `modified_time` datetime DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `teachers`
+--
+
+INSERT INTO `teachers` (`id`, `username`, `fullname`, `address`, `phone`, `status`, `avatar`, `description`, `content`, `info`, `cmnd`, `created_time`, `created_by`, `modified_time`, `modified_by`, `created_at`, `updated_at`) VALUES
+(1, 'hailan', 'Lưu Trường Hải Lân', '', '01659213296', 1, '/img/upload/teacher/2831e8f9f2e73e8fe26293e6170feb0aa4e72502.jpeg', '<p><span style=\"color:rgb(36, 39, 41); font-family:arial,helvetica neue,helvetica,sans-serif; font-size:15px\">The first line of this file states the URI for the key, which is written into the HLS playlist. The second line of the file points to the key file (may be local or http) against which the media will be encrypted.</span></p>\r\n\r\n<p><span style=\"color:rgb(36, 39, 41); font-family:arial,helvetica neue,helvetica,sans-serif; font-size:15px\">The first line of this file states the URI for the key, which is written into the HLS playlist. The second line of the file points to the key file (may be local or http) against which the media will be encrypted.</span></p>', NULL, 'Cao to đen hôi', '741852963', '2018-07-02 17:15:29', NULL, '2018-07-02 17:34:07', '', '2018-07-02 10:15:29', '2018-07-02 10:34:08'),
+(2, 'hoalv12', 'Lưu Văn Hòa', '', '01659213290', 1, '/img/upload/teacher/4a6f8d09f9b3cd386fd789ee3210835afc0902c9.jpeg', '<p><span style=\"color:rgb(36, 39, 41); font-family:arial,helvetica neue,helvetica,sans-serif; font-size:15px\">The first line of this file states the URI for the key, which is written into the HLS playlist. The second line of the file points to the key file (may be local or http) against which the media will be encrypted.The first line of this file states the URI for the key, which is written into the HLS playlist. The second line of the file points to the key file (may be local or http) against which the media will be encrypted.The first line of this file states the URI for the key, which is written into the HLS playlist. The second line of the file points to the key file (may be local or http) against which the media will be encrypted.The first line of this file states the URI for the key, which is written into the HLS playlist. The second line of the file points to the key file (may be local or http) against which the media will be encrypted.The first line of this file states the URI for the key, which is written into the HLS playlist. The second line of the file points to the key file (may be local or http) against which the media will be encrypted.</span></p>', NULL, 'Cao to đen hôi', '23456789', '2018-07-02 17:34:39', NULL, '2018-07-02 17:42:56', '', '2018-07-02 10:34:39', '2018-07-02 10:42:57');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -599,6 +633,12 @@ ALTER TABLE `tag_article`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -703,6 +743,12 @@ ALTER TABLE `role`
 --
 ALTER TABLE `tag_article`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `teachers`
+--
+ALTER TABLE `teachers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
