@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 02, 2018 at 07:45 PM
+-- Generation Time: Jul 03, 2018 at 06:07 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -486,6 +486,7 @@ CREATE TABLE `users` (
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int(11) NOT NULL DEFAULT '1',
   `group_id` int(11) NOT NULL DEFAULT '1',
+  `admin` int(11) NOT NULL DEFAULT '0',
   `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
   `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -502,9 +503,10 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `fullname`, `email`, `status`, `group_id`, `password`, `address`, `phone`, `birthday`, `register_date`, `last_login`, `token_login`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1000001, 'hoalv123', 'Lưu Văn Hòa', 'admin@gmail.com', 2, 10, '$2y$10$0KX8bJSxnomTbgVjczSJB.aFcaSH7edJT2zjKogX3zV/pLYUt7T6a', 'adf', '01659213296', '2018-06-21', '2018-06-21 00:00:00', '2018-06-21 00:00:00', NULL, '2018-06-21 09:25:07', '2018-06-24 07:08:13', NULL),
-(1000002, 'hoaluu', 'Lưu Hòa', 'luuvanhoa001@gmail.com', 1, 2, '$2y$10$tbJA/r54oIuABmkYtG4Oe.2Qf7VFY4bnQrOAXKaSS2YEYQYuX.vD6', 'adf', '01659213296', '2018-06-24', NULL, '2018-06-21 00:00:00', NULL, '2018-06-23 18:51:04', '2018-06-23 18:51:04', NULL);
+INSERT INTO `users` (`id`, `username`, `fullname`, `email`, `status`, `group_id`, `admin`, `password`, `address`, `phone`, `birthday`, `register_date`, `last_login`, `token_login`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1000001, 'hoalv123', 'Lưu Văn Hòa', 'admin@gmail.com', 1, 10, 1, '$2y$10$O91T0BpmSBBzLV/K5YyHVO83SqiWXph/xKt5runFpcrbEtJncQcOC', 'adf', '01659213296', '2018-06-21', '2018-06-21 00:00:00', '2018-06-21 00:00:00', NULL, '2018-06-21 09:25:07', '2018-06-24 07:08:13', NULL),
+(1000002, 'hoaluu', 'Lưu Hòa', 'luuvanhoa001@gmail.com', 1, 2, 1, '$2y$10$yIc9GLvIdnZiSqDa6wZnu.uXN8shQM9VHlKjir0BAOwNffWV0HIaS', 'adf', '01659213296', '2018-06-24', NULL, '2018-06-21 00:00:00', NULL, '2018-06-23 18:51:04', '2018-07-03 08:10:29', NULL),
+(1000003, 'admin1@gmail.com', 'admin1', 'admin1@gmail.com', 1, 1, 1, '$2y$10$bUuYLXCDt6UTAw8LNjEMce1GMPvDua7kT2zthEnEMDLNFzNwgMs/W', NULL, NULL, '1970-01-01', NULL, NULL, NULL, '2018-07-03 07:18:44', '2018-07-03 08:10:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -754,7 +756,7 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000003;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000004;
 
 --
 -- AUTO_INCREMENT for table `users_courses`

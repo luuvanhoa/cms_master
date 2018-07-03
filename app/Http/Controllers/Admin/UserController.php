@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginAdminRquest;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Session;
 use App\User;
 use DB;
@@ -13,6 +14,8 @@ use Hash;
 
 class UserController extends Controller
 {
+    use AuthenticatesUsers;
+
     protected $_limit = 15;
 
     public function __construct()
@@ -98,7 +101,7 @@ class UserController extends Controller
             'username' => $request->get('username'),
             'fullname' => $request->get('fullname'),
             'email' => $request->get('email'),
-            'password' => bcrypt($request->get('password')),
+            'password' => Hash::make($request->get('password')),
             'phone' => $request->get('phone'),
             'group_id' => $request->get('group_id'),
             'address' => $request->get('address'),
@@ -118,16 +121,17 @@ class UserController extends Controller
     {
         $email = $request->get('email');
         $password = $request->get('password');
+
         if (Auth::attempt(['email' => $email, 'password' => $password, 'admin' => 1])) {
-            return redirect('/admin/dashboard');
+            return redirect(route('dashboard'));
         } else {
-            return redirect('/admin/login');
+            return redirect(route('login'));
         }
     }
 
     public function logOut()
     {
         Auth::logout();
-        return redirect('/admin/login');
+        return redirect(route('logout'));
     }
 }

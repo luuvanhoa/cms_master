@@ -97,3 +97,7 @@ Route::group(['prefix' => 'administrator', 'middleware' => ['authadminRoute']], 
     // **** CATEGORIES ARTICLE ****
 
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -20,6 +20,7 @@
 							'id' => 'submit_form',
 							'class' => 'form-horizontal ',
 							'method' => 'POST',
+							'autocomplete'=>"off",
 							'url'=> route('user-add-post')
 						)) !!}
 							<fieldset>
@@ -36,13 +37,13 @@
 								<div class="form-group">
 									<label class="col-md-2 control-label">Username <span class="required">*</span></label>
 									<div class="col-md-10">
-										<input class="form-control" id="username" name="username" placeholder="Username" type="text">
+										{!! Form::text('username', '', array('class' => 'form-control', 'placeholder' => 'Username')) !!}
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label">Fullname</label>
 									<div class="col-md-10">
-										<input class="form-control" id="fullname" name="fullname" placeholder="Fullname" type="text">
+										{!! Form::text('fullname', '', array('class' => 'form-control', 'placeholder' => 'Fullname')) !!}
 									</div>
 								</div>
 								<div class="form-group">
@@ -61,7 +62,7 @@
 								<div class="form-group">
 									<label class="col-md-2 control-label">Email <span class="required">*</span></label>
 									<div class="col-md-10">
-										<input name="email" class="form-control" placeholder="Email" type="text">
+										{!! Form::text('email', '', array('class' => 'form-control', 'placeholder' => 'Email')) !!}
 									</div>
 								</div>
 								<div class="form-group">
@@ -81,25 +82,25 @@
 								<div class="form-group">
 									<label class="col-md-2 control-label">Password <span class="required">*</span></label>
 									<div class="col-md-10">
-										<input name="password" class="form-control" placeholder="Password" type="password">
+										<input autocomplete="off" name="password" class="form-control" placeholder="Password" type="password">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label">Phone number</label>
 									<div class="col-md-10">
-										<input name="phone" class="form-control" placeholder="Phone number" type="text">
+										{!! Form::text('phone', '', array('class' => 'form-control', 'placeholder' => 'Phone number')) !!}
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label">Birthday</label>
 									<div class="col-md-10">
-										<input type="text" name="birthday" placeholder="Birthday" class="form-control datepicker" data-dateformat='dd-mm-yy'>
+										{!! Form::text('birthday', '', array('class' => 'form-control datepicker', 'placeholder' => 'Birthday', 'data-dateformat' => 'dd-mm-yy')) !!}
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label">Address</label>
 									<div class="col-md-10">
-										<input name="address" class="form-control" placeholder="Address" type="text">
+										{!! Form::text('address', '', array('class' => 'form-control', 'placeholder' => 'Address')) !!}
 									</div>
 								</div>
 								<div class="form-group">
