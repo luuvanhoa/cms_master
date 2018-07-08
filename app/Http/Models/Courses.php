@@ -21,6 +21,7 @@ class Courses extends Model
         'price',
         'price_old',
         'start_sale',
+        'images',
         'end_sale',
         'publish_time',
         'status',
@@ -32,6 +33,7 @@ class Courses extends Model
         'meta_title',
         'meta_keyword',
         'created_time',
-        'modified_time'
+        'modified_time',
+        'courseid_old'
     ];
 }

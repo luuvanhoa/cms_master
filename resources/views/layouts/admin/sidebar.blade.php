@@ -11,7 +11,7 @@
 			</div>
 			<div class="profile_info">
 				<span>Welcome,</span>
-				<h2>John Doe</h2>
+				<h2><?php echo Auth::user()->username ?></h2>
 			</div>
 		</div>
 		<!-- /menu profile quick info -->
@@ -103,7 +103,7 @@
 				<li class="">
 					<a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 						{!! Html::image('st-admin/images/img.jpg', 'me') !!}
-						John Doe
+                        <?php echo Auth::user()->username ?>
 						<span class=" fa fa-angle-down"></span>
 					</a>
 					<ul class="dropdown-menu dropdown-usermenu pull-right">
