@@ -38,9 +38,9 @@
 				{!! Form::select('group_id',
 					array(
 						'all' => 'Select group',
-						'1' => 'Member',
-						'2' => 'Manager',
-						'10' => 'Admin'
+						'1000003' => 'Member',
+						'1000002' => 'Manager',
+						'1000001' => 'Admin'
 					),
 					$params['group_id'],
 					array( 'class' => 'form-control' )
@@ -79,9 +79,9 @@
 								<tbody>
 								@if(!empty($users))
 									<?php $userGroup = array(
-                                        '1' => 'Member',
-                                        '2' => 'Manager',
-                                        '10' => 'Admin'
+                                        '1000003' => 'Member',
+                                        '1000002' => 'Manager',
+                                        '1000001' => 'Admin'
                                     );?>
 
 									@foreach ( $users as $user )

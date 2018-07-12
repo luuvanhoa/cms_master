@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Http\Models\Courses;
 use App\Http\Models\Teacher;
+use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -114,6 +115,62 @@ class MigrateData extends Command
                 break;
             case 'category' :
 
+                break;
+            case 'users' :
+                $offset = 0;
+                $limit = 100;
+                $i = 0;
+                do {
+                    $listUsersOld = $dbOld->table('training_users')->skip($offset * $limit)->take($limit)->get();
+                    if (!empty($listUsersOld)) {
+                        foreach ($listUsersOld as $user) {
+                            $i++;
+                            $this->info("/n" . $i . ' ======================> ' . $user->id);
+                            $data = array(
+                                'username' => $user->user_name,
+                                'fullname' => $user->first_name . ' ' . $user->last_name,
+                                'email' => $user->email,
+                                'password_old' => $user->password,
+                                'id_old' => $user->id,
+                                'group_id' => 1000003,
+                                'register_date' => $user->register_date,
+                                'birthday' => ($user->birthday != '') ? (date('Y-m-d', strtotime($user->birthday))) : null,
+                            );
+                            User::create($data);
+                            if ($i % 10 == 0) {
+                                sleep(1);
+                            }
+                        }
+                    }
+                    $offset++;
+                } while (count($listUsersOld) > 0);
+                break;
+
+            case 'students' :
+                $offset = 0;
+                $limit = 100;
+                $i = 0;
+
+                $listStudentsOld = $dbOld->table('training_students')->skip($offset * $limit)->take($limit)->get();
+                if (!empty($listStudentsOld)) {
+                    foreach ($listStudentsOld as $student) {
+
+                        $this->info("/n" . $i . ' ======================> ' . json_encode($student));
+
+                    }
+                }
+
+                /*do {
+                    $listUsersOld = $dbOld->table('training_students')->skip($offset * $limit)->take($limit)->get();
+                    if (!empty($listUsersOld)) {
+                        foreach ($listUsersOld as $user) {
+                            $i++;
+                            $this->info("/n" . $i . ' ======================> ' . $user->id);
+
+                        }
+                    }
+                    $offset++;
+                } while (count($listUsersOld) > 0);*/
                 break;
             default:
                 $this->info('Not found table - PARAM INVALID');
